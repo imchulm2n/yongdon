@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
+import '../screens/day_detail_screen.dart';
+
 class MyCalender extends StatefulWidget {
   const MyCalender({
     super.key,
@@ -25,7 +27,7 @@ class _MyCalenderState extends State<MyCalender> {
       },
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
-      focusedDay: DateTime.now(),
+      focusedDay: _focusedDay,
       locale: 'ko_KR',
       //달력 스타일
       headerStyle: HeaderStyle(
@@ -66,8 +68,17 @@ class _MyCalenderState extends State<MyCalender> {
       onDaySelected: (selectedDay, focusedDay) {
         setState(() {
           _selectedDay = selectedDay;
-          _focusedDay = focusedDay; // update `_focusedDay` here as well
+          _focusedDay = focusedDay;
         });
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DayDetailScreen(
+              selectedDay: selectedDay,
+            ),
+          ),
+        );
       },
     );
   }
